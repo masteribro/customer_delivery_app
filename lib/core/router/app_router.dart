@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../presentation/screens/splash/splash_screen.dart';
-import '../../presentation/screens/auth/phone_screen.dart';
-import '../../presentation/screens/auth/otp_screen.dart';
+import '../../presentation/screens/auth/login_screen.dart';
 import '../../presentation/screens/auth/profile_setup_screen.dart';
 import '../../presentation/screens/home/home_shell.dart';
 import '../../presentation/screens/home/home_tab.dart';
@@ -31,17 +30,7 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/login',
-      builder: (context, state) => const PhoneScreen(),
-    ),
-    GoRoute(
-      path: '/otp',
-      builder: (context, state) {
-        final extras = state.extra as Map<String, dynamic>;
-        return OtpScreen(
-          verificationId: extras['verificationId'] as String,
-          phoneNumber: extras['phoneNumber'] as String,
-        );
-      },
+      builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
       path: '/profile-setup',

@@ -11,54 +11,36 @@ class AuthRepository {
   bool get isLoggedIn => currentUser != null;
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
-  Future<void> verifyPhone({
-    required String phoneNumber,
-    required void Function(PhoneAuthCredential) onCompleted,
-    required void Function(FirebaseAuthException) onFailed,
-    required void Function(String verificationId, int? resendToken) onCodeSent,
-    required void Function(String) onCodeAutoRetrievalTimeout,
-    int? resendToken,
+  Future<UserCredential> signUpWithEmail({
+    required String email,
+    required String password,
   }) async {
-    _log('AUTH', 'verifyPhone → $phoneNumber');
-    await _auth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (credential) {
-        _log('AUTH', 'verificationCompleted (auto-resolved)');
-        onCompleted(credential);
-      },
-      verificationFailed: (e) {
-        _log('AUTH', 'verificationFailed → ${e.code}: ${e.message}');
-        onFailed(e);
-      },
-      codeSent: (verificationId, resendToken) {
-        _log('AUTH', 'codeSent → verificationId: ${verificationId.substring(0, 10)}...');
-        onCodeSent(verificationId, resendToken);
-      },
-      codeAutoRetrievalTimeout: (id) {
-        _log('AUTH', 'codeAutoRetrievalTimeout');
-        onCodeAutoRetrievalTimeout(id);
-      },
-      forceResendingToken: resendToken,
+    _log('AUTH', 'signUpWithEmail → $email');
+    final result = await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
     );
+    _log('AUTH', 'signUp SUCCESS → uid: ${result.user?.uid}');
+    return result;
   }
 
-  Future<UserCredential> signInWithCredential(
-      PhoneAuthCredential credential) async {
-    _log('AUTH', 'signInWithCredential...');
-    final result = await _auth.signInWithCredential(credential);
+  Future<UserCredential> signInWithEmail({
+    required String email,
+    required String password,
+  }) async {
+    _log('AUTH', 'signInWithEmail → $email');
+    final result = await _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
     _log('AUTH', 'signIn SUCCESS → uid: ${result.user?.uid}');
     return result;
   }
 
-  PhoneAuthCredential createCredential({
-    required String verificationId,
-    required String smsCode,
-  }) {
-    _log('AUTH', 'createCredential → code: $smsCode');
-    return PhoneAuthProvider.credential(
-      verificationId: verificationId,
-      smsCode: smsCode,
-    );
+  Future<void> sendPasswordReset(String email) async {
+    _log('AUTH', 'sendPasswordReset → $email');
+    await _auth.sendPasswordResetEmail(email: email);
+    _log('AUTH', 'sendPasswordReset → SUCCESS');
   }
 
   Future<UserModel?> getUserProfile(String uid) async {
@@ -81,13 +63,6 @@ class AuthRepository {
     _log('FIRESTORE', 'UPDATE users/$uid → $data');
     await _firestore.collection('users').doc(uid).update(data);
     _log('FIRESTORE', 'UPDATE users/$uid → SUCCESS');
-  }
-
-  Future<UserCredential> signInAnonymously() async {
-    _log('AUTH', 'signInAnonymously...');
-    final result = await _auth.signInAnonymously();
-    _log('AUTH', 'signInAnonymously SUCCESS → uid: ${result.user?.uid}');
-    return result;
   }
 
   Future<void> signOut() async {

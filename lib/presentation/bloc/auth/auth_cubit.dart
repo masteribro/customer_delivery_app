@@ -29,59 +29,45 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> sendOtp(String phoneNumber) async {
+  Future<void> signUp({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
     emit(AuthLoading());
     try {
-      await _authRepo.verifyPhone(
-        phoneNumber: phoneNumber,
-        onCompleted: (credential) async {
-          await _signInWithCredential(credential);
-        },
-        onFailed: (e) {
-          final msg = e.message ?? 'Verification failed';
-          // Provide clearer message for common iOS issues
-          if (msg.contains('missing') || msg.contains('nil')) {
-            emit(const AuthError(
-              'Phone auth requires APNs configuration. '
-              'Add a test phone number in Firebase Console → Authentication → Phone → Test phone numbers.',
-            ));
-          } else {
-            emit(AuthError(msg));
-          }
-        },
-        onCodeSent: (verificationId, resendToken) {
-          emit(AuthCodeSent(verificationId: verificationId, phoneNumber: phoneNumber));
-        },
-        onCodeAutoRetrievalTimeout: (_) {},
+      final result = await _authRepo.signUpWithEmail(
+        email: email,
+        password: password,
       );
+      final user = result.user!;
+      final profile = UserModel(
+        uid: user.uid,
+        phone: '',
+        name: name,
+        email: email,
+        createdAt: DateTime.now(),
+      );
+      await _authRepo.createUserProfile(profile);
+      _userProfile = profile;
+      emit(AuthAuthenticated(profile));
     } on FirebaseAuthException catch (e) {
-      emit(AuthError(e.message ?? 'Phone verification failed'));
+      emit(AuthError(_mapAuthError(e.code)));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
   }
 
-  Future<void> verifyOtp({
-    required String verificationId,
-    required String smsCode,
+  Future<void> signIn({
+    required String email,
+    required String password,
   }) async {
     emit(AuthLoading());
     try {
-      final credential = _authRepo.createCredential(
-        verificationId: verificationId,
-        smsCode: smsCode,
+      final result = await _authRepo.signInWithEmail(
+        email: email,
+        password: password,
       );
-      await _signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
-      emit(AuthError(e.message ?? 'Invalid code'));
-    } catch (e) {
-      emit(AuthError('Invalid verification code'));
-    }
-  }
-
-  Future<void> _signInWithCredential(PhoneAuthCredential credential) async {
-    try {
-      final result = await _authRepo.signInWithCredential(credential);
       final user = result.user!;
       final profile = await _authRepo.getUserProfile(user.uid);
       if (profile != null && profile.name.isNotEmpty) {
@@ -90,8 +76,22 @@ class AuthCubit extends Cubit<AuthState> {
       } else {
         emit(AuthNeedsProfile());
       }
+    } on FirebaseAuthException catch (e) {
+      emit(AuthError(_mapAuthError(e.code)));
     } catch (e) {
-      emit(AuthError('Sign in failed'));
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> resetPassword(String email) async {
+    emit(AuthLoading());
+    try {
+      await _authRepo.sendPasswordReset(email);
+      emit(AuthPasswordResetSent());
+    } on FirebaseAuthException catch (e) {
+      emit(AuthError(_mapAuthError(e.code)));
+    } catch (e) {
+      emit(AuthError(e.toString()));
     }
   }
 
@@ -104,7 +104,7 @@ class AuthCubit extends Cubit<AuthState> {
       final user = _authRepo.currentUser!;
       final profile = UserModel(
         uid: user.uid,
-        phone: user.phoneNumber ?? '',
+        phone: '',
         name: name,
         email: email,
         createdAt: DateTime.now(),
@@ -142,27 +142,32 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  /// Dev-only: sign in anonymously to bypass phone auth issues
-  Future<void> devSignIn() async {
-    emit(AuthLoading());
-    try {
-      await _authRepo.signInAnonymously();
-      final user = _authRepo.currentUser!;
-      final profile = await _authRepo.getUserProfile(user.uid);
-      if (profile != null && profile.name.isNotEmpty) {
-        _userProfile = profile;
-        emit(AuthAuthenticated(profile));
-      } else {
-        emit(AuthNeedsProfile());
-      }
-    } catch (e) {
-      emit(AuthError(e.toString()));
-    }
-  }
-
   Future<void> signOut() async {
     await _authRepo.signOut();
     _userProfile = null;
     emit(AuthUnauthenticated());
+  }
+
+  String _mapAuthError(String code) {
+    switch (code) {
+      case 'email-already-in-use':
+        return 'This email is already registered. Try signing in.';
+      case 'invalid-email':
+        return 'Please enter a valid email address.';
+      case 'weak-password':
+        return 'Password must be at least 6 characters.';
+      case 'user-not-found':
+        return 'No account found with this email.';
+      case 'wrong-password':
+        return 'Incorrect password. Try again.';
+      case 'invalid-credential':
+        return 'Invalid email or password.';
+      case 'too-many-requests':
+        return 'Too many attempts. Please try again later.';
+      case 'user-disabled':
+        return 'This account has been disabled.';
+      default:
+        return 'Something went wrong. Please try again.';
+    }
   }
 }

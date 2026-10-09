@@ -48,7 +48,7 @@ class AppTheme {
         titleTextStyle: TextStyle(
           fontFamily: 'Montserrat',
           fontSize: 18,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
       ),
@@ -81,7 +81,7 @@ class AppTheme {
           textStyle: const TextStyle(
             fontFamily: 'Montserrat',
             fontSize: 16,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
@@ -96,7 +96,7 @@ class AppTheme {
           textStyle: const TextStyle(
             fontFamily: 'Montserrat',
             fontSize: 16,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),

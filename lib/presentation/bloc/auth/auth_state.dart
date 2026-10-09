@@ -10,16 +10,6 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
-class AuthCodeSent extends AuthState {
-  final String verificationId;
-  final String phoneNumber;
-
-  const AuthCodeSent({required this.verificationId, required this.phoneNumber});
-
-  @override
-  List<Object?> get props => [verificationId, phoneNumber];
-}
-
 class AuthNeedsProfile extends AuthState {}
 
 class AuthAuthenticated extends AuthState {
@@ -30,6 +20,8 @@ class AuthAuthenticated extends AuthState {
 }
 
 class AuthUnauthenticated extends AuthState {}
+
+class AuthPasswordResetSent extends AuthState {}
 
 class AuthError extends AuthState {
   final String message;

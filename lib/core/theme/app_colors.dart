@@ -25,10 +25,10 @@ class AppColors {
   static const Color divider = Color(0xFFF0F1F3);
   static const Color disabled = Color(0xFFBCC1CA);
 
-  // Text — matches GadaMobile
-  static const Color textPrimary = Color(0xFF0F1724);
-  static const Color textSecondary = Color(0xFF4B5563);
-  static const Color textTertiary = Color(0xFF9CA3AF);
+  // Text — strong contrast
+  static const Color textPrimary = Color(0xFF000000);
+  static const Color textSecondary = Color(0xFF374151);
+  static const Color textTertiary = Color(0xFF6B7280);
   static const Color textOnPrimary = Color(0xFFFFFFFF);
   static const Color textOnSecondary = Color(0xFF0F1724);
   static const Color textLink = Color(0xFF002D85);
