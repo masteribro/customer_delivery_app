@@ -46,7 +46,13 @@ class _OrdersTabState extends State<OrdersTab> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(state.message, style: AppTextStyles.bodySmall),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(state.message,
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.textPrimary,
+                        )),
+                  ),
                   const SizedBox(height: 12),
                   OutlinedButton(
                     onPressed: _loadOrders,
@@ -87,7 +93,7 @@ class _OrdersTabState extends State<OrdersTab> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.receipt_long_outlined,
-              size: 64, color: AppColors.textTertiary.withValues(alpha: 0.3)),
+              size: 64, color: AppColors.disabled),
           const SizedBox(height: 16),
           Text('No orders yet', style: AppTextStyles.h3),
           const SizedBox(height: 6),
@@ -215,7 +221,7 @@ class _OrderCard extends StatelessWidget {
               children: [
                 Text('Total',
                     style: AppTextStyles.bodySmall
-                        .copyWith(color: AppColors.textTertiary)),
+                        .copyWith(color: AppColors.textSecondary)),
                 Text('NGN ${order.total.toStringAsFixed(0)}',
                     style: AppTextStyles.labelMedium),
               ],

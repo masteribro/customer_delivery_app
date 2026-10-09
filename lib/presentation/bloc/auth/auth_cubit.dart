@@ -142,6 +142,24 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  /// Dev-only: sign in anonymously to bypass phone auth issues
+  Future<void> devSignIn() async {
+    emit(AuthLoading());
+    try {
+      await _authRepo.signInAnonymously();
+      final user = _authRepo.currentUser!;
+      final profile = await _authRepo.getUserProfile(user.uid);
+      if (profile != null && profile.name.isNotEmpty) {
+        _userProfile = profile;
+        emit(AuthAuthenticated(profile));
+      } else {
+        emit(AuthNeedsProfile());
+      }
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
   Future<void> signOut() async {
     await _authRepo.signOut();
     _userProfile = null;

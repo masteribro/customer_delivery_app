@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -174,6 +175,19 @@ class _PhoneScreenState extends State<PhoneScreen> {
                     },
                   ),
                   const Spacer(),
+                  if (kDebugMode)
+                    Center(
+                      child: TextButton(
+                        onPressed: () =>
+                            context.read<AuthCubit>().devSignIn(),
+                        child: Text(
+                          'Dev Login (skip phone auth)',
+                          style: AppTextStyles.labelSmall.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ),
+                    ),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 24),

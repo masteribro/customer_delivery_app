@@ -198,7 +198,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget _placeholder() {
     return Center(
       child: Icon(Icons.fastfood_outlined,
-          size: 56, color: AppColors.textTertiary.withValues(alpha: 0.2)),
+          size: 56, color: AppColors.textSecondary.withValues(alpha: 0.2)),
     );
   }
 }

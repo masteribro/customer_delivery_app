@@ -104,7 +104,7 @@ class _NavItem extends StatelessWidget {
             Icon(
               icon,
               size: 24,
-              color: isActive ? AppColors.primary : AppColors.textTertiary,
+              color: isActive ? AppColors.primary : AppColors.textSecondary,
             ),
             const SizedBox(height: 4),
             Text(
@@ -113,7 +113,7 @@ class _NavItem extends StatelessWidget {
                 fontFamily: 'Montserrat',
                 fontSize: 11,
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                color: isActive ? AppColors.primary : AppColors.textTertiary,
+                color: isActive ? AppColors.primary : AppColors.textSecondary,
               ),
             ),
           ],
@@ -149,7 +149,7 @@ class _CartNavItem extends StatelessWidget {
                       size: 24,
                       color: isActive
                           ? AppColors.primary
-                          : AppColors.textTertiary,
+                          : AppColors.textSecondary,
                     ),
                     if (state.hasItems)
                       Positioned(
@@ -182,7 +182,7 @@ class _CartNavItem extends StatelessWidget {
                 fontFamily: 'Montserrat',
                 fontSize: 11,
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                color: isActive ? AppColors.primary : AppColors.textTertiary,
+                color: isActive ? AppColors.primary : AppColors.textSecondary,
               ),
             ),
           ],

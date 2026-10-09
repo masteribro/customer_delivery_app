@@ -21,16 +21,25 @@ class AppColors {
   static const Color background = Color(0xFFF7F8FA);
   static const Color surface = Color(0xFFFFFFFF);
   static const Color card = Color(0xFFFFFFFF);
-  static const Color border = Color(0xFFE5E7EB);
+  static const Color border = Color(0xFFC3C8D4);
   static const Color divider = Color(0xFFF0F1F3);
   static const Color disabled = Color(0xFFBCC1CA);
 
-  // Text
-  static const Color textPrimary = Color(0xFF1A1D26);
-  static const Color textSecondary = Color(0xFF6B7280);
+  // Text — matches GadaMobile
+  static const Color textPrimary = Color(0xFF0F1724);
+  static const Color textSecondary = Color(0xFF4B5563);
   static const Color textTertiary = Color(0xFF9CA3AF);
   static const Color textOnPrimary = Color(0xFFFFFFFF);
-  static const Color textOnSecondary = Color(0xFF1A1D26);
+  static const Color textOnSecondary = Color(0xFF0F1724);
+  static const Color textLink = Color(0xFF002D85);
+
+  // Input fields
+  static const Color inputText = Color(0xFF0F1724);
+  static const Color inputPlaceholder = Color(0xFF9CA3AF);
+  static const Color inputBg = Color(0xFFF3F4F6);
+  static const Color inputBgFocused = Color(0xFFE8EEFF);
+  static const Color inputBorder = Color(0xFFC3C8D4);
+  static const Color inputBorderFocused = Color(0xFF0037A4);
 
   // Semantic
   static const Color success = Color(0xFF0F7F41);

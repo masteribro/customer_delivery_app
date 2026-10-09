@@ -92,13 +92,13 @@ class VendorCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
                         Icon(Icons.access_time_rounded,
-                            size: 13, color: AppColors.textTertiary),
+                            size: 13, color: AppColors.textSecondary),
                         const SizedBox(width: 3),
                         Text('${vendor.prepTimeMinutes} min',
                             style: AppTextStyles.caption),
                         const SizedBox(width: 12),
                         Icon(Icons.delivery_dining_outlined,
-                            size: 14, color: AppColors.textTertiary),
+                            size: 14, color: AppColors.textSecondary),
                         const SizedBox(width: 3),
                         Text(
                           vendor.deliveryFee > 0

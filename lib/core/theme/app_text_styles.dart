@@ -10,6 +10,7 @@ class AppTextStyles {
     fontSize: 28,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
+    letterSpacing: -0.5,
     height: 1.3,
   );
 
@@ -18,14 +19,16 @@ class AppTextStyles {
     fontSize: 22,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
+    letterSpacing: -0.3,
     height: 1.3,
   );
 
   static const TextStyle h3 = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 18,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
+    letterSpacing: -0.2,
     height: 1.4,
   );
 
@@ -33,7 +36,7 @@ class AppTextStyles {
   static const TextStyle bodyLarge = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 16,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.5,
   );
@@ -41,15 +44,15 @@ class AppTextStyles {
   static const TextStyle bodyMedium = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 14,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.5,
   );
 
   static const TextStyle bodySmall = TextStyle(
     fontFamily: 'Montserrat',
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
     color: AppColors.textSecondary,
     height: 1.4,
   );
@@ -58,21 +61,21 @@ class AppTextStyles {
   static const TextStyle labelLarge = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 16,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
   );
 
   static const TextStyle labelMedium = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 14,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
   );
 
   static const TextStyle labelSmall = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 12,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.textSecondary,
   );
 
@@ -80,16 +83,16 @@ class AppTextStyles {
   static const TextStyle button = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 16,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.white,
   );
 
   // Caption
   static const TextStyle caption = TextStyle(
     fontFamily: 'Montserrat',
-    fontSize: 11,
-    fontWeight: FontWeight.w500,
-    color: AppColors.textTertiary,
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textSecondary,
     height: 1.3,
   );
 
@@ -104,15 +107,15 @@ class AppTextStyles {
   static const TextStyle priceSmall = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 14,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     color: AppColors.primary,
   );
 
   static const TextStyle priceStrikethrough = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 12,
-    fontWeight: FontWeight.w400,
-    color: AppColors.textTertiary,
+    fontWeight: FontWeight.w500,
+    color: AppColors.textSecondary,
     decoration: TextDecoration.lineThrough,
   );
 }

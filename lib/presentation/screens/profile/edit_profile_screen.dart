@@ -187,10 +187,10 @@ class _Field extends StatelessWidget {
           readOnly: readOnly,
           keyboardType: keyboardType,
           style: AppTextStyles.bodyLarge.copyWith(
-            color: readOnly ? AppColors.textTertiary : null,
+            color: readOnly ? AppColors.textSecondary : null,
           ),
           decoration: InputDecoration(
-            prefixIcon: Icon(icon, color: AppColors.textTertiary, size: 22),
+            prefixIcon: Icon(icon, color: AppColors.textSecondary, size: 22),
             fillColor: readOnly ? AppColors.background : AppColors.white,
           ),
         ),

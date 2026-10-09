@@ -213,7 +213,7 @@ class CartScreen extends StatelessWidget {
   Widget _imgPlaceholder() {
     return Center(
       child: Icon(Icons.fastfood_outlined,
-          size: 20, color: AppColors.textTertiary.withValues(alpha: 0.3)),
+          size: 20, color: AppColors.textSecondary.withValues(alpha: 0.3)),
     );
   }
 
@@ -223,7 +223,7 @@ class CartScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.shopping_cart_outlined,
-              size: 64, color: AppColors.textTertiary.withValues(alpha: 0.3)),
+              size: 64, color: AppColors.textSecondary.withValues(alpha: 0.3)),
           const SizedBox(height: 16),
           Text('Your cart is empty', style: AppTextStyles.h3),
           const SizedBox(height: 6),

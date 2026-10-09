@@ -83,6 +83,13 @@ class AuthRepository {
     _log('FIRESTORE', 'UPDATE users/$uid → SUCCESS');
   }
 
+  Future<UserCredential> signInAnonymously() async {
+    _log('AUTH', 'signInAnonymously...');
+    final result = await _auth.signInAnonymously();
+    _log('AUTH', 'signInAnonymously SUCCESS → uid: ${result.user?.uid}');
+    return result;
+  }
+
   Future<void> signOut() async {
     _log('AUTH', 'signOut');
     await _auth.signOut();

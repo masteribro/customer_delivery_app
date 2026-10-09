@@ -78,7 +78,7 @@ class _HomeTabState extends State<HomeTab> {
                 Text(
                   'Deliver to',
                   style: AppTextStyles.caption.copyWith(
-                    color: AppColors.textTertiary,
+                    color: AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -139,12 +139,12 @@ class _HomeTabState extends State<HomeTab> {
           ),
           child: Row(
             children: [
-              const Icon(Icons.search, size: 22, color: AppColors.textTertiary),
+              const Icon(Icons.search, size: 22, color: AppColors.textSecondary),
               const SizedBox(width: 12),
               Text(
                 'Search restaurants, food...',
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textTertiary,
+                  color: AppColors.inputPlaceholder,
                 ),
               ),
             ],
@@ -305,12 +305,12 @@ class _HomeTabState extends State<HomeTab> {
       child: Column(
         children: [
           Icon(Icons.storefront_outlined,
-              size: 56, color: AppColors.textTertiary.withValues(alpha: 0.4)),
+              size: 56, color: AppColors.disabled),
           const SizedBox(height: 12),
           Text(
             'No restaurants found',
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textTertiary,
+              color: AppColors.textSecondary,
             ),
           ),
         ],
@@ -324,7 +324,7 @@ class _HomeTabState extends State<HomeTab> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.wifi_off_rounded,
-              size: 48, color: AppColors.textTertiary),
+              size: 48, color: AppColors.textSecondary),
           const SizedBox(height: 12),
           Text('Something went wrong', style: AppTextStyles.labelLarge),
           const SizedBox(height: 4),
@@ -412,7 +412,7 @@ class FeaturedVendorCard extends StatelessWidget {
                           style: AppTextStyles.caption),
                       const Spacer(),
                       Icon(Icons.access_time,
-                          size: 13, color: AppColors.textTertiary),
+                          size: 13, color: AppColors.textSecondary),
                       const SizedBox(width: 3),
                       Text('${vendor.prepTimeMinutes} min',
                           style: AppTextStyles.caption),

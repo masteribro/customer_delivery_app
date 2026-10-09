@@ -97,7 +97,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     decoration: const InputDecoration(
                       hintText: 'Your full name',
                       prefixIcon: Icon(Icons.person_outline,
-                          color: AppColors.textTertiary, size: 22),
+                          color: AppColors.textSecondary, size: 22),
                     ),
                     validator: (value) {
                       if (value == null || value.trim().length < 2) {
@@ -122,7 +122,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     decoration: const InputDecoration(
                       hintText: 'you@example.com',
                       prefixIcon: Icon(Icons.email_outlined,
-                          color: AppColors.textTertiary, size: 22),
+                          color: AppColors.textSecondary, size: 22),
                     ),
                     validator: (value) {
                       if (value == null || !value.contains('@')) {

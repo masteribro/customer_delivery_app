@@ -195,7 +195,7 @@ class _MenuItem extends StatelessWidget {
         ),
       ),
       trailing: Icon(Icons.chevron_right,
-          size: 20, color: color ?? AppColors.textTertiary),
+          size: 20, color: color ?? AppColors.textSecondary),
       onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16),
     );

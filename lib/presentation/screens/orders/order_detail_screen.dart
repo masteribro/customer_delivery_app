@@ -386,7 +386,7 @@ class _TimelineStep extends StatelessWidget {
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: isCompleted
                         ? AppColors.textPrimary
-                        : AppColors.textTertiary,
+                        : AppColors.textSecondary,
                     fontWeight:
                         isCompleted ? FontWeight.w500 : FontWeight.w400,
                   ),

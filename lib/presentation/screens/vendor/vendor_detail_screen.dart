@@ -156,7 +156,7 @@ class _VendorDetailBody extends StatelessWidget {
               child: Center(
                 child: Text('No menu items yet',
                     style: AppTextStyles.bodyMedium
-                        .copyWith(color: AppColors.textTertiary)),
+                        .copyWith(color: AppColors.textSecondary)),
               ),
             )
           else
@@ -270,7 +270,7 @@ class _InfoChip extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 15, color: iconColor ?? AppColors.textTertiary),
+        Icon(icon, size: 15, color: iconColor ?? AppColors.textSecondary),
         const SizedBox(width: 4),
         Text(text, style: AppTextStyles.bodySmall),
       ],
@@ -353,7 +353,7 @@ class _ProductTile extends StatelessWidget {
   Widget _placeholder() {
     return Center(
       child: Icon(Icons.fastfood_outlined,
-          size: 24, color: AppColors.textTertiary.withValues(alpha: 0.3)),
+          size: 24, color: AppColors.textSecondary.withValues(alpha: 0.3)),
     );
   }
 }

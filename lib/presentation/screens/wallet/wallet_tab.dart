@@ -103,13 +103,12 @@ class WalletTab extends StatelessWidget {
                   children: [
                     Icon(Icons.receipt_long_outlined,
                         size: 40,
-                        color:
-                            AppColors.textTertiary.withValues(alpha: 0.3)),
+                        color: AppColors.disabled),
                     const SizedBox(height: 12),
                     Text(
                       'No transactions yet',
                       style: AppTextStyles.bodyMedium
-                          .copyWith(color: AppColors.textTertiary),
+                          .copyWith(color: AppColors.textSecondary),
                     ),
                   ],
                 ),

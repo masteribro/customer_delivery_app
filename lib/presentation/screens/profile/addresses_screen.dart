@@ -35,7 +35,7 @@ class AddressesScreen extends StatelessWidget {
                 children: [
                   Icon(Icons.location_off_outlined,
                       size: 56,
-                      color: AppColors.textTertiary.withValues(alpha: 0.3)),
+                      color: AppColors.textSecondary.withValues(alpha: 0.3)),
                   const SizedBox(height: 12),
                   Text('No saved addresses',
                       style: AppTextStyles.h3),

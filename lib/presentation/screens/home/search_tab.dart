@@ -68,11 +68,11 @@ class _SearchTabState extends State<SearchTab> {
               decoration: InputDecoration(
                 hintText: 'Search restaurants, cuisines...',
                 prefixIcon: const Icon(Icons.search,
-                    size: 22, color: AppColors.textTertiary),
+                    size: 22, color: AppColors.textSecondary),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
                         icon: const Icon(Icons.close,
-                            size: 20, color: AppColors.textTertiary),
+                            size: 20, color: AppColors.textSecondary),
                         onPressed: () {
                           _searchController.clear();
                           _search('');
@@ -116,13 +116,13 @@ class _SearchTabState extends State<SearchTab> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.search_rounded,
-              size: 56, color: AppColors.textTertiary.withValues(alpha: 0.3)),
+              size: 56, color: AppColors.disabled),
           const SizedBox(height: 12),
           Text(
             'Search for your favourite\nrestaurants or cuisines',
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyMedium
-                .copyWith(color: AppColors.textTertiary),
+                .copyWith(color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -135,7 +135,7 @@ class _SearchTabState extends State<SearchTab> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.search_off_rounded,
-              size: 48, color: AppColors.textTertiary.withValues(alpha: 0.4)),
+              size: 48, color: AppColors.disabled),
           const SizedBox(height: 12),
           Text('No results found',
               style: AppTextStyles.labelLarge
