@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../bloc/cart/cart_cubit.dart';
+import '../../bloc/auth/auth_cubit.dart';
 
 class HomeShell extends StatelessWidget {
   final Widget child;
@@ -13,64 +13,66 @@ class HomeShell extends StatelessWidget {
     final location = GoRouterState.of(context).uri.path;
     if (location.startsWith('/search')) return 1;
     if (location.startsWith('/orders')) return 2;
-    if (location.startsWith('/wallet')) return 3;
-    if (location.startsWith('/profile')) return 4;
+    if (location.startsWith('/profile') || location.startsWith('/wallet')) {
+      return 3;
+    }
     return 0;
   }
 
   @override
   Widget build(BuildContext context) {
     final index = _currentIndex(context);
+    final bottom = MediaQuery.of(context).padding.bottom;
 
     return Scaffold(
+      extendBody: true,
       body: child,
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.white,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.shadow,
-              blurRadius: 16,
-              offset: Offset(0, -4),
-            ),
-          ],
+        color: Colors.transparent,
+        padding: EdgeInsets.only(
+          left: 20,
+          right: 20,
+          bottom: bottom > 0 ? bottom : 16,
+          top: 8,
         ),
-        child: SafeArea(
-          child: SizedBox(
-            height: 64,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _NavItem(
-                  icon: Icons.home_rounded,
-                  label: 'Home',
-                  isActive: index == 0,
-                  onTap: () => context.go('/home'),
-                ),
-                _NavItem(
-                  icon: Icons.search_rounded,
-                  label: 'Search',
-                  isActive: index == 1,
-                  onTap: () => context.go('/search'),
-                ),
-                _CartNavItem(
-                  isActive: index == 2,
-                  onTap: () => context.go('/orders'),
-                ),
-                _NavItem(
-                  icon: Icons.account_balance_wallet_outlined,
-                  label: 'Wallet',
-                  isActive: index == 3,
-                  onTap: () => context.go('/wallet'),
-                ),
-                _NavItem(
-                  icon: Icons.person_outline_rounded,
-                  label: 'Account',
-                  isActive: index == 4,
-                  onTap: () => context.go('/profile'),
-                ),
-              ],
-            ),
+        child: Container(
+          height: 64,
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(40),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.12),
+                blurRadius: 20,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              _NavItem(
+                icon: Icons.home_rounded,
+                label: 'Home',
+                isActive: index == 0,
+                onTap: () => context.go('/home'),
+              ),
+              _NavItem(
+                icon: Icons.search_rounded,
+                label: 'Search',
+                isActive: index == 1,
+                onTap: () => context.go('/search'),
+              ),
+              _NavItem(
+                icon: Icons.receipt_long_rounded,
+                label: 'Orders',
+                isActive: index == 2,
+                onTap: () => context.go('/orders'),
+              ),
+              _AccountNavItem(
+                isActive: index == 3,
+                onTap: () => context.go('/profile'),
+              ),
+            ],
           ),
         ),
       ),
@@ -93,27 +95,25 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: SizedBox(
-        width: 64,
+    final color = isActive ? AppColors.primary : const Color(0xFF9CA3AF);
+
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 24,
-              color: isActive ? AppColors.primary : AppColors.textSecondary,
-            ),
-            const SizedBox(height: 4),
+            Icon(icon, size: 22, color: color),
+            const SizedBox(height: 3),
             Text(
               label,
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 11,
-                fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                color: isActive ? AppColors.primary : AppColors.textSecondary,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.3,
+                color: color,
               ),
             ),
           ],
@@ -123,66 +123,59 @@ class _NavItem extends StatelessWidget {
   }
 }
 
-class _CartNavItem extends StatelessWidget {
+class _AccountNavItem extends StatelessWidget {
   final bool isActive;
   final VoidCallback onTap;
 
-  const _CartNavItem({required this.isActive, required this.onTap});
+  const _AccountNavItem({required this.isActive, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: SizedBox(
-        width: 64,
+    final color = isActive ? AppColors.primary : const Color(0xFF9CA3AF);
+
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder<CartCubit, CartState>(
+            BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
-                return Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Icon(
-                      Icons.receipt_long_outlined,
-                      size: 24,
-                      color: isActive
-                          ? AppColors.primary
-                          : AppColors.textSecondary,
-                    ),
-                    if (state.hasItems)
-                      Positioned(
-                        right: -6,
-                        top: -4,
-                        child: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            color: AppColors.error,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Text(
-                            '${state.itemCount}',
-                            style: const TextStyle(
-                              fontSize: 9,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.white,
-                            ),
-                          ),
-                        ),
+                final photoUrl = state is AuthAuthenticated
+                    ? state.user.photoUrl
+                    : null;
+
+                if (photoUrl != null) {
+                  return Container(
+                    width: 22,
+                    height: 22,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: color,
+                        width: 1.5,
                       ),
-                  ],
-                );
+                      image: DecorationImage(
+                        image: NetworkImage(photoUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                }
+
+                return Icon(Icons.person_rounded, size: 22, color: color);
               },
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 3),
             Text(
-              'Orders',
+              'Account',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 11,
-                fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                color: isActive ? AppColors.primary : AppColors.textSecondary,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.3,
+                color: color,
               ),
             ),
           ],
