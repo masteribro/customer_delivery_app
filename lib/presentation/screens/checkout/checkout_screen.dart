@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -59,6 +60,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       final cart = context.read<CartCubit>().state.cart!;
       final user = context.read<AuthCubit>().userProfile!;
 
+      // Generate 4-digit delivery PIN
+      final deliveryPin = (1000 + Random().nextInt(9000)).toString();
+      // Service fee: 10% of subtotal (rider's earning)
+      final serviceFee = (cart.subtotal * 0.10).roundToDouble();
+
       final order = OrderModel(
         id: '',
         userId: user.uid,
@@ -75,8 +81,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             .toList(),
         subtotal: cart.subtotal,
         deliveryFee: cart.deliveryFee,
+        serviceFee: serviceFee,
         total: cart.total,
         deliveryAddress: _addressController.text.trim(),
+        deliveryPin: deliveryPin,
         notes: _notesController.text.trim().isEmpty
             ? null
             : _notesController.text.trim(),
@@ -119,6 +127,37 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 textAlign: TextAlign.center,
                 style: AppTextStyles.bodyMedium
                     .copyWith(color: AppColors.textSecondary),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                decoration: BoxDecoration(
+                  color: AppColors.primarySurface,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Delivery PIN',
+                      style: AppTextStyles.caption,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      deliveryPin,
+                      style: AppTextStyles.h1.copyWith(
+                        letterSpacing: 8,
+                        fontSize: 32,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Share this PIN with the rider to confirm delivery',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.caption.copyWith(fontSize: 11),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 24),
               ElevatedButton(
@@ -294,6 +333,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         value: cart.deliveryFee > 0
                             ? 'NGN ${cart.deliveryFee.toStringAsFixed(0)}'
                             : 'Free',
+                      ),
+                      const SizedBox(height: 8),
+                      _PriceRow(
+                        label: 'Service Fee',
+                        value: 'NGN ${(cart.subtotal * 0.10).toStringAsFixed(0)}',
                       ),
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 12),

@@ -224,6 +224,40 @@ class _OrderDetailBody extends StatelessWidget {
             ),
           ),
 
+          // Delivery PIN
+          if (order.deliveryPin != null &&
+              order.deliveryPin!.isNotEmpty &&
+              order.status != 'delivered' &&
+              order.status != 'cancelled') ...[
+            const SizedBox(height: 8),
+            Container(
+              color: AppColors.white,
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const Icon(Icons.pin_outlined,
+                      size: 28, color: AppColors.primary),
+                  const SizedBox(height: 8),
+                  Text('Delivery PIN', style: AppTextStyles.labelSmall),
+                  const SizedBox(height: 8),
+                  Text(
+                    order.deliveryPin!,
+                    style: AppTextStyles.h1.copyWith(
+                      letterSpacing: 8,
+                      fontSize: 32,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Share this PIN with the rider to confirm delivery',
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.caption,
+                  ),
+                ],
+              ),
+            ),
+          ],
+
           const SizedBox(height: 40),
         ],
       ),

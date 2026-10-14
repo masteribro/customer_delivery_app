@@ -17,6 +17,8 @@ dependencies:
   firebase_auth: ^5.5.4
   cloud_firestore: ^5.6.12
   firebase_storage: ^12.4.4
+  firebase_messaging: ^15.2.4
+  flutter_local_notifications: ^18.0.1
 
   # State Management
   flutter_bloc: ^9.1.0

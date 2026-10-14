@@ -16,6 +16,7 @@ import '../../presentation/screens/checkout/checkout_screen.dart';
 import '../../presentation/screens/orders/order_detail_screen.dart';
 import '../../presentation/screens/profile/edit_profile_screen.dart';
 import '../../presentation/screens/profile/addresses_screen.dart';
+import '../../presentation/screens/notifications/notifications_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -99,6 +100,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/addresses',
       builder: (context, state) => const AddressesScreen(),
+    ),
+    GoRoute(
+      path: '/notifications',
+      builder: (context, state) => const NotificationsScreen(),
     ),
   ],
 );

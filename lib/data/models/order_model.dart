@@ -15,6 +15,8 @@ class OrderModel {
   final String? riderName;
   final String? riderPhone;
   final String? notes;
+  final String? deliveryPin;
+  final double serviceFee;
   final DateTime createdAt;
   final DateTime? deliveredAt;
 
@@ -33,6 +35,8 @@ class OrderModel {
     this.riderName,
     this.riderPhone,
     this.notes,
+    this.deliveryPin,
+    this.serviceFee = 0,
     required this.createdAt,
     this.deliveredAt,
   });
@@ -81,6 +85,8 @@ class OrderModel {
       riderName: data['riderName'],
       riderPhone: data['riderPhone'],
       notes: data['notes'],
+      deliveryPin: data['deliveryPin'],
+      serviceFee: (data['serviceFee'] ?? 0).toDouble(),
       createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
       deliveredAt: (data['deliveredAt'] as Timestamp?)?.toDate(),
     );
@@ -101,6 +107,8 @@ class OrderModel {
       'riderName': riderName,
       'riderPhone': riderPhone,
       'notes': notes,
+      'deliveryPin': deliveryPin,
+      'serviceFee': serviceFee,
       'createdAt': Timestamp.fromDate(createdAt),
       'deliveredAt':
           deliveredAt != null ? Timestamp.fromDate(deliveredAt!) : null,

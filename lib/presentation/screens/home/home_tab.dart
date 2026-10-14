@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/services/notification_service.dart';
 import '../../../data/models/vendor_model.dart';
 import '../../bloc/auth/auth_cubit.dart';
 import '../../bloc/home/home_cubit.dart';
@@ -19,10 +20,18 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  int _unreadCount = 0;
+
   @override
   void initState() {
     super.initState();
     context.read<HomeCubit>().loadHome();
+    _loadUnreadCount();
+  }
+
+  Future<void> _loadUnreadCount() async {
+    final count = await NotificationService().getUnreadCount();
+    if (mounted) setState(() => _unreadCount = count);
   }
 
   @override
@@ -106,17 +115,49 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
           GestureDetector(
-            onTap: () {},
-            child: Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.border),
-              ),
-              child: const Icon(Icons.notifications_outlined,
-                  size: 22, color: AppColors.textPrimary),
+            onTap: () async {
+              await context.push('/notifications');
+              _loadUnreadCount();
+            },
+            child: Stack(
+              children: [
+                Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: AppColors.border),
+                  ),
+                  child: const Icon(Icons.notifications_outlined,
+                      size: 22, color: AppColors.textPrimary),
+                ),
+                if (_unreadCount > 0)
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: AppColors.error,
+                        shape: BoxShape.circle,
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 18,
+                        minHeight: 18,
+                      ),
+                      child: Text(
+                        _unreadCount > 9 ? '9+' : '$_unreadCount',
+                        style: const TextStyle(
+                          color: AppColors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
         ],
